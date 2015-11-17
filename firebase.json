@@ -1,0 +1,9 @@
+{
+  "firebase": "sizzling-heat-1733",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

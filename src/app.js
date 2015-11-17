@@ -4,6 +4,9 @@ var Delegator = require('dom-delegator')
 var isEmail = require('is-email')
 var getFormData = require('get-form-data')
 var xhr = require('xhr')
+var Firebase = require('firebase')
+
+var firebaseRef = new Firebase('https://sizzling-heat-1733.firebaseio.com/')
 
 var state = {
   validEmail: true,
@@ -28,23 +31,26 @@ function submitEmail (ev) {
 }
 
 function saveEmail () {
-  state.loading = true
-  loop.update(state)
-  xhr({
-    method: 'POST',
-    data: JSON.stringify({email: state.email}),
-    uri: 'http://localhost:3200/save',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }, function (err, resp) {
-    if (err) {
-      window.alert(err)
-    }
-
-    state.loading = false
-    loop.update(state)
+  firebaseRef.push().set({
+    email: state.email
   })
+  // state.loading = true
+  // loop.update(state)
+  // xhr({
+  //   method: 'POST',
+  //   data: JSON.stringify({email: state.email}),
+  //   uri: 'http://localhost:3200/save',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // }, function (err, resp) {
+  //   if (err) {
+  //     window.alert(err)
+  //   }
+  //
+  //   state.loading = false
+  //   loop.update(state)
+  // })
 }
 
 function render () {
