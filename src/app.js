@@ -24,7 +24,6 @@ function submitEmail (ev) {
   } else {
     state.email = data.email
     state.validEmail = true
-    console.log(state)
     saveEmail()
   }
   loop.update(state)
@@ -34,23 +33,8 @@ function saveEmail () {
   firebaseRef.push().set({
     email: state.email
   })
-  // state.loading = true
-  // loop.update(state)
-  // xhr({
-  //   method: 'POST',
-  //   data: JSON.stringify({email: state.email}),
-  //   uri: 'http://localhost:3200/save',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // }, function (err, resp) {
-  //   if (err) {
-  //     window.alert(err)
-  //   }
-  //
-  //   state.loading = false
-  //   loop.update(state)
-  // })
+  state.added = true
+  loop.update(state)
 }
 
 function render () {
@@ -107,27 +91,13 @@ function render () {
         fontFamily: 'Open Sans, sans-serif'
       }
     }, 'Invalid Email'),
-    h('div', {
+    h('h4', {
       style: {
-        display: state.loading ? 'block' : 'none',
-        position: 'absolute',
-        top: '0',
-        bottom: '0',
-        left: '0',
-        right: '0',
-        backgroundColor: 'rgba(0,0,0,.8)'
+        display: state.added ? 'block' : 'none',
+        color: 'rgb(0, 204, 0)',
+        fontFamily: 'Open sans, sans-serif'
       }
-    }, [
-      h('i', {
-        className: 'ion-loading-d',
-        style: {
-          fontSize: '70px',
-          top: '200px',
-          color: 'white',
-          position: 'relative'
-        }
-      })
-    ])
+    }, 'Added ' + state.email)
   ])
 }
 
